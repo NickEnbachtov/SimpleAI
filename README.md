@@ -1,4 +1,4 @@
-# SimpleAI
+# Simple AI for Corona SDK
 Simple artificial intelligence for Corona SDK
 
 # Overview
