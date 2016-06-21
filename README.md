@@ -19,6 +19,6 @@ Creates an object with specific behavior, which can contact (fire, visual contac
 
 5. Enjoy
 
-Documentation and code examples at http://simple-ai.blogspot.com
+###### Under MIT license
 
-# MIT License
+Documentation and code examples at http://simple-ai.blogspot.com
