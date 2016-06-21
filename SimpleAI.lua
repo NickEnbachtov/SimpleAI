@@ -3,7 +3,7 @@
 -- SimpleAI class
 --
 -----------------------------------------------------------------------------------------
--- It consists of a AI object. AI can move and shoot to the player
+-- Creates an object with specific behavior, which can contact (fire, visual contact, collision) with the object having type "player" (and other objects if needed)
 --[[
 	syntax: newAI({group, img, x, y[, ai_type][,spriteObj]})
 	usage: 
