@@ -413,8 +413,7 @@ function _M.newAI(params)
 			fireAIAhead(direction)		
 		end
 
-		if(aiType == "patrol") then	
-		print(obj.x.." | "..(x-obj.limitLeft).." | "..direction)			
+		if(aiType == "patrol") then				
 			if(obj.x >= (x-obj.limitLeft) and direction == 0) then								
 				MoveAILeft()				
 			elseif(obj.x <= (x+obj.limitRight) and direction == 1) then					
