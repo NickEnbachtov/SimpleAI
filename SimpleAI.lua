@@ -451,68 +451,7 @@ function _M.newAI(params)
 end
 
 return _M
---[[
----------------------
--- Sprite Animation
----------------------
-local sheetOptions =
-{
-    width = 512,
-    height = 256,
-    numFrames = 8
-}
 
-local sheet_spriteObj = graphics.newImageSheet( "sprites-cat-running.png", sheetOptions )
-
--- sequences table
-local sequences_spriteObj = {
-    -- first sequence (consecutive frames)
-    {
-        name = "normalRun",
-        start = 1,
-        count = 8,
-        time = 800,
-        loopCount = 0
-    },
-    -- next sequence (non-consecutive frames)
-    {
-        name = "fastRun",
-        frames = { 1,3,5,7 },
-        time = 400,
-        loopCount = 0
-    },
-}
-
-local spriteObj = display.newSprite( sheet_spriteObj, sequences_spriteObj ) -- instead of newImage()
-
-spriteObj:setSequence( "normalRun" )
-spriteObj:play()
---]]
-
---[[ 
-TODO:
-*1) если тип объекта отличается от "enemy", тогда объект не агрессивный и доступно изменение поведения через методы
-*2) передавать картинку для объектов типа bullet
-3) проверить анимацию
-*4) составить пример с анимацией
-*5) сделать методы для поведения при попадании сканера и при попадании bullet в объект типа "player" 
-*6) добавить расстояние виденья 
-*7) сделать методы для поведения при столкновении объектов AI с объектами типа "player" 
-*8) составить пример наследования класса SimpleAI с переопределением методов
-9) изменить фиксацию вращения
-10) передовать event в методы
-
-TODO TappyHappy:
-1) добавить несколько уровней
-2) сделать сохранения
-3) сделать обращение к сервисам (список лучших)
-4) сделать регистрацию
-5) добавить рекламу
-6) доработать геймплэй (собирать звездочки, сложность уровней, длина уровней)
-7) создать веб-сайт игры
-8) дизайн персонажей
-9) добавить эффекты (неон, particle)
---]]
 
 
 
