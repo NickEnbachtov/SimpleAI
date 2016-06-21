@@ -20,3 +20,5 @@ Creates an object with specific behavior, which can contact (fire, visual contac
 5. Enjoy
 
 Documentation and code examples at http://simple-ai.blogspot.com
+
+# MIT License
