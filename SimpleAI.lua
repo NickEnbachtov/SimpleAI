@@ -34,6 +34,7 @@ function _M.newAI(params)
 	local lastPlayerNoticedPosition = x
 	local fireEnabled = false
 	local stopFireOnInit = true
+	local sprite = params.sprite or {}
 	
 
 	
@@ -42,6 +43,12 @@ function _M.newAI(params)
 		obj.x = x
 		obj.y = y
 		group:insert(spriteObj)
+		obj:setSequence( "normalRun" )
+		obj:play()
+	elseif(next(sprite) ~= nil) then
+		obj = display.newSprite( group, sprite[1], sprite[2] )
+		obj.x = x
+		obj.y = y		
 		obj:setSequence( "normalRun" )
 		obj:play()
 	else
@@ -173,10 +180,10 @@ function _M.newAI(params)
 	end
 
 	function obj:remove()
-		Runtime:removeEventListener("enterFrame", run)
+		Runtime:removeEventListener("enterFrame", obj)
 		obj.visionScannerLeft:removeSelf( )
 		obj.visionScannerRight:removeSelf( )
-		display.remove( obj )
+		display.remove( obj )		
 	end
 	
 	---------------------
@@ -472,12 +479,13 @@ function _M.newAI(params)
 		obj:addExtraAction()
 	end
 	
-	function run( ... )
-		obj:actionAI()
+	function obj:enterFrame()
+		self:actionAI()
 	end
 	
-	Runtime:addEventListener( "enterFrame", run )
+	Runtime:addEventListener( "enterFrame", obj )
 	-- End of Functions	
+
 	
 	return obj
 end
