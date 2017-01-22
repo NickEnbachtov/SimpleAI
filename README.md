@@ -21,4 +21,8 @@ Creates an object with specific behavior, which can contact (fire, visual contac
 
 ###### Under MIT license
 
+### Sample Code
+
+You can access sample code [here](SampleCode.lua).
+
 Documentation and code examples at http://simple-ai.blogspot.com
