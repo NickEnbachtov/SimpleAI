@@ -23,6 +23,6 @@ Creates an object with specific behavior, which can contact (fire, visual contac
 
 ### Sample Code
 
-You can access sample code [here (SimpleAI example project class version)](SimpleAI example project class version).
+You can access sample project [here (SimpleAI example project class version)](SimpleAI example project class version).
 
 Documentation and code examples at http://simple-ai.blogspot.com
