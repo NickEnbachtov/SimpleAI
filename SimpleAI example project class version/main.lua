@@ -134,7 +134,7 @@ function enemy2:defaultActionOnAiCollisionWithPlayer(event)
 	 	enemy2:remove( )
 end
 
-physics.setDrawMode( "hybrid" )
+-- physics.setDrawMode( "hybrid" )
 
 -- Controllers
 -- action buttons	
