@@ -109,6 +109,8 @@ local enemy = newAI({group = mainGroup, img = "snailWalk1.png", x = halfW-50, y 
 function enemy:defaultActionOnAiCollisionWithPlayer(event)
 	 	enemy:remove( )
 end
+
+
 -- now "enemy" will contact with "player"
 
 -- another enemy instance with animation example
@@ -118,12 +120,21 @@ function enemy1:defaultActionOnAiCollisionWithPlayer(event)
 end
 enemy1.fireImg = "bullet.png" -- add bullet image
 enemy1.allowShoot = true
+enemy1.changeDirection = true
+function enemy1:customActionOnAiCollisionWithObjects(event)
+	if(event.other.type == 'enemy') then
+		enemy1:SwitchDirection()
+	end	 		
+
+end
 
 -- enemy instanc static image
 local enemy2 = newAI({group = mainGroup, img = "snailWalk1.png", x = halfW-300, y = display.contentHeight-300, ai_type = "patrol"})
 function enemy2:defaultActionOnAiCollisionWithPlayer(event)
 	 	enemy2:remove( )
 end
+
+physics.setDrawMode( "hybrid" )
 
 -- Controllers
 -- action buttons	
