@@ -35,7 +35,7 @@ function _M.newAI(params)
 	local fireEnabled = false
 	local stopFireOnInit = true
 	local sprite = params.sprite or {}
-	local changeDirection = false
+	local withoutLimit = false
 	local stop = false
 
 	
@@ -66,7 +66,7 @@ function _M.newAI(params)
 	obj.shootVelocity = 2000
 	obj.fireImg = nil
 	obj.visionLength = 300
-	obj.changeDirection = changeDirection
+	obj.withoutLimit = withoutLimit
 	obj.direction = direction
 	obj.stop = stop
 
@@ -463,7 +463,7 @@ function _M.newAI(params)
 
 		if(aiType == "patrol") then	
 
-		if(obj.changeDirection) then
+		if(obj.withoutLimit) then
 			if(obj.direction == 0) then
 				obj:MoveAILeft()
 			elseif(obj.direction == 1) then
