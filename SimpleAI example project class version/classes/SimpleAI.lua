@@ -35,7 +35,8 @@ function _M.newAI(params)
 	local fireEnabled = false
 	local stopFireOnInit = true
 	local sprite = params.sprite or {}
-	
+	local changeDirection = false
+	local stop = false
 
 	
 	if(spriteObj ~= nil) then
@@ -65,6 +66,9 @@ function _M.newAI(params)
 	obj.shootVelocity = 2000
 	obj.fireImg = nil
 	obj.visionLength = 300
+	obj.changeDirection = changeDirection
+	obj.direction = direction
+	obj.stop = stop
 
 	
 	-- Scanner for limited vision
@@ -228,7 +232,7 @@ function _M.newAI(params)
 		obj.xScale = -1
 	end
 
-	function obj:MoveAILeft()			
+	function obj:MoveAILeft()					
 		obj.x = obj.x - 1
 		obj.xScale = 1
 	end
@@ -243,9 +247,14 @@ function _M.newAI(params)
 
 	function obj:SwitchDirection()		
 		if(direction == 2) then
-			direction = 1
+			direction = 1			
 		elseif(direction == 3) then
 			direction = 0
+		end	
+		if(obj.direction == 1) then
+			obj.direction = 0			
+		elseif(obj.direction == 0) then
+			obj.direction = 1
 		end		
 	end
 
@@ -279,11 +288,17 @@ function _M.newAI(params)
 		-- scanBeam.isBullet = true
 
 		--Make the object a sensor
-		scanBeam.isSensor = true
+		scanBeam.isSensor = true		
 
-		if(direction == 0 or direction == 2) then
-			scanBeam:setLinearVelocity( -700,0 )
-		elseif(direction == 1 or direction == 3) then
+		-- if(direction == 0 or direction == 2) then
+		-- 	scanBeam:setLinearVelocity( -700,0 )
+		-- elseif(direction == 1 or direction == 3) then
+		-- 	scanBeam:setLinearVelocity( 700,0 )
+		-- end
+
+		if(obj.direction == 0 or obj.direction == 2) then
+			scanBeam:setLinearVelocity( -700,0 )			
+		elseif(obj.direction == 1 or obj.direction == 3) then
 			scanBeam:setLinearVelocity( 700,0 )
 		end
 		
@@ -348,9 +363,15 @@ function _M.newAI(params)
 		--Make the object a sensor
 		fireBall.isSensor = true
 
-		if(direction == 0 or direction == 2) then
-			fireBall:setLinearVelocity( -700,0 )
-		elseif(direction == 1 or direction == 3) then
+		-- if(direction == 0 or direction == 2) then
+		-- 	fireBall:setLinearVelocity( -700,0 )
+		-- elseif(direction == 1 or direction == 3) then
+		-- 	fireBall:setLinearVelocity( 700,0 )
+		-- end
+
+		if(obj.direction == 0 or obj.direction == 2) then
+			fireBall:setLinearVelocity( -700,0 )			
+		elseif(obj.direction == 1 or obj.direction == 3) then
 			fireBall:setLinearVelocity( 700,0 )
 		end
 
@@ -425,7 +446,7 @@ function _M.newAI(params)
 		obj.visionScannerLeft.y = obj.y
 		obj.visionScannerRight.y = obj.y
 
-		
+
 
 		if(stopFireOnInit) then
 			stopFireOnInit = false
@@ -440,12 +461,33 @@ function _M.newAI(params)
 			obj:fireAIAhead(direction)		
 		end
 
-		if(aiType == "patrol") then				
-			if(obj.x >= (x-obj.limitLeft) and direction == 0) then								
-				obj:MoveAILeft()				
-			elseif(obj.x <= (x+obj.limitRight) and direction == 1) then					
-				obj:MoveAIRigth()							
-			end		
+		if(aiType == "patrol") then	
+
+		if(obj.changeDirection) then
+			if(obj.direction == 0) then
+				obj:MoveAILeft()
+			elseif(obj.direction == 1) then
+				obj:MoveAIRigth()
+			end
+
+			if(obj.type == "enemy") then 
+				obj:moveObjToPlayerPosition()
+				if( obj.x == lastPlayerNoticedPosition ) then
+					obj.isFixedRotation = false
+				end
+			end	
+
+			obj.isFixedRotation = true	
+			
+		else
+			if(obj.stop == false) then
+				if(obj.x >= (x-obj.limitLeft) and obj.direction == 0) then								
+					obj:MoveAILeft()				
+				elseif(obj.x <= (x+obj.limitRight) and obj.direction == 1) then					
+					obj:MoveAIRigth()							
+				end
+			end
+					
 
 			if(obj.type == "enemy") then 
 				obj:moveObjToPlayerPosition()
@@ -457,19 +499,21 @@ function _M.newAI(params)
 			-- if obj follow the the player
 			if(obj.isFixedRotation == false) then 
 				if(obj.x <= (x-obj.limitLeft)) then 			
-					direction = 1
+					obj.direction = 1
 				elseif(obj.x >= (x+obj.limitRight)) then 			
-					direction = 0	
+					obj.direction = 0	
 				end
 			end
+		end			
+			
 		elseif(aiType == "guard") then
-			if(direction == 0) then
+			if(obj.direction == 0) then
 				obj:TurnAILeft()
-				direction = 2
+				obj.direction = 2
 				timer.performWithDelay( obj.switchDirectionTime, SwitchDirection )
-			elseif(direction == 1) then
+			elseif(obj.direction == 1) then
 				obj:TurnAIRigth()
-				direction = 3
+				obj.direction = 3
 				timer.performWithDelay( obj.switchDirectionTime, SwitchDirection )
 			end					
 			
