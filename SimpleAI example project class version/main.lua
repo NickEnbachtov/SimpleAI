@@ -120,7 +120,7 @@ function enemy1:defaultActionOnAiCollisionWithPlayer(event)
 end
 enemy1.fireImg = "bullet.png" -- add bullet image
 enemy1.allowShoot = true
-enemy1.changeDirection = true
+enemy1.withoutLimit = true
 function enemy1:customActionOnAiCollisionWithObjects(event)
 	if(event.other.type == 'enemy') then
 		enemy1:SwitchDirection()
